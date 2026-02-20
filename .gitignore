@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Docker / logs
+docker-compose.override.yml
+logs/
+!logs/.keep
+*.log
+
+# Secrets
+*.pem
+*.key
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

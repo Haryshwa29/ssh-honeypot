@@ -1,0 +1,19 @@
+# Dockerfile.target
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends openssh-server rsyslog iproute2 procps busybox \
+  && mkdir -p /var/run/sshd /var/log/hp /home/honeypotuser/project \
+  && useradd -m -s /usr/sbin/nologin honeypotuser \
+  && echo 'honeypotuser:Passw0rd!' | chpasswd \
+  && echo 'root:RootPassw0rd!' | chpasswd \
+  && echo "This is a test README — nothing sensitive" > /home/honeypotuser/project/README.md \
+  && mkdir -p /var/log/hp/sessions \
+  && chmod -R 700 /var/log/hp \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+COPY hp_bash_wrapper.sh /usr/local/bin/hp_bash_wrapper.sh
+COPY start-sshd.sh /usr/local/bin/start-sshd.sh
+RUN chmod +x /usr/local/bin/hp_bash_wrapper.sh /usr/local/bin/start-sshd.sh \
+    && usermod --shell /usr/local/bin/hp_bash_wrapper.sh honeypotuser
+EXPOSE 22
+CMD ["/usr/local/bin/start-sshd.sh"]

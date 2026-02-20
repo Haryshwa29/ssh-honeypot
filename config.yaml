@@ -1,0 +1,11 @@
+listen_host: "0.0.0.0"
+listen_port: 2222
+honeypot_image: "honeypot_target:latest"
+network_name: "honeynet"
+session_dir: "logs/sessions"
+meta_log: "logs/meta.log"
+container_start_timeout: 12
+max_runtime_seconds_per_container: 3600
+memory_limit: "256m"
+cpus: "0.5"
+pids_limit: 64
